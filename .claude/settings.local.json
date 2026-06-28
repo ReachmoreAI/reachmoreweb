@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:/Users/marcu/Desktop/\" 2>/dev/null | grep -iE \"reach|logo|\\\\.png|\\\\.svg|\\\\.jpg|\\\\.jpeg|\\\\.webp\" ; echo \"---DOWNLOADS---\" ; ls -la \"C:/Users/marcu/Downloads/\" 2>/dev/null | grep -iE \"reach|logo\" | head -20)",
+      "Bash(unzip -l reachmore-rcds-v3.zip)",
+      "Bash(py --version)",
+      "Bash(npx --version)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const b=fs.readFileSync\\('C:/Users/marcu/Desktop/builder-main/Reachmore logo.png'\\);const w=b.readUInt32BE\\(16\\),h=b.readUInt32BE\\(20\\);console.log\\('PNG',w+'x'+h, b.length+' bytes'\\);\")",
+      "Bash(python -m http.server 8123 --bind 127.0.0.1)",
+      "Bash(curl -s -o /dev/null -w \"index.html -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/index.html)",
+      "Bash(curl -s -o /dev/null -w \"studio.html -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/studio.html)",
+      "Bash(curl -s -o /dev/null -w \"css -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/assets/css/reachmore.css)",
+      "Bash(curl -s -o /dev/null -w \"blocks.js -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/assets/js/blocks.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(python -m pip install --quiet Pillow)",
+      "Bash(python -c \"import PIL; print\\('PIL ready', PIL.__version__\\)\")",
+      "Bash(cp reachmore-logo.png reachmore-logo-original.png)",
+      "Bash(python -)",
+      "Bash(curl -s \"http://127.0.0.1:8124/assets/js/bot.js\")",
+      "Bash(curl -s -o /dev/null -w \"8123 index -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/index.html)",
+      "PowerShell(Start-Process \"http://127.0.0.1:8123/index.html\")",
+      "PowerShell(\"Opened Reachmore in default browser\")",
+      "Bash(curl -s -o /dev/null -w \"8123 -> HTTP %{http_code}\\\\n\" http://127.0.0.1:8123/index.html)",
+      "PowerShell(Start-Process \"http://127.0.0.1:8123/index.html?v=now\")",
+      "PowerShell(\"Opened refreshed Reachmore in browser\")",
+      "PowerShell(\"Opened Reachmore in browser\")",
+      "Bash(node -e ' *)",
+      "Bash(sed -i 's#blocks.js?v=8#blocks.js?v=9#g' index.html studio.html)",
+      "Bash(curl -s -o /dev/null -w \"8123 index -> %{http_code}\\\\n\" http://127.0.0.1:8123/index.html)",
+      "Bash(node server.js)",
+      "Bash(curl -s -X POST http://localhost:4000/api/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"marcushnn21@gmail.com\",\"pass\":\"mivs1232\"}')",
+      "Bash(curl -s http://localhost:4000/api/health)",
+      "WebFetch(domain:dk.godaddy.com)",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 4000 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue; \"stopped pid \" + $c.OwningProcess } else { \"none\" })"
+    ]
+  }
+}

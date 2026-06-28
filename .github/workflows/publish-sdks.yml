@@ -1,0 +1,65 @@
+---
+name: Publish new generation SDKs
+
+on:
+  push:
+    branches:
+      - main
+  # We allow manually dispatching workflow when needed. Most often, this will not be needed.
+  workflow_dispatch:
+
+permissions:
+  id-token: write  # Required for OIDC
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  publish-sdks:
+    name: Publish SDKs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BUILDER_BOT_FOR_LINT_APP_ID }}
+          private-key: ${{ secrets.BUILDER_BOT_FOR_LINT_PRIVATE_KEY }}
+
+      - name: Setup
+        uses: actions/checkout@v3
+        with:
+          # need this custom token to run CI checks on the created PR
+          token: ${{ steps.generate-token.outputs.token }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Create Release PR & Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn workspace @builder.io/sdks ci:release
+          title: '📦 Publish SDKs'
+          commit: '📦 Publish SDKs'
+        env:
+          # need this custom token to run CI checks on the created PR
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      # - name: Send Slack notification
+      #   id: slack
+      #   uses: slackapi/slack-github-action@v1.24.0
+      #   with:
+      #     payload: |
+      #       { "publishedPackages": ${{ fromJson(steps.changesets.outputs.publishedPackages) }} }
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

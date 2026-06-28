@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="da" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reachmore — Byg dit website med AI</title>
+<meta name="description" content="Reachmore er den danske AI website-builder. Beskriv dit website, så bygger AI'en det — redigér visuelt og udgiv med ét klik. Gratis at bygge.">
+<link rel="icon" href="assets/img/reachmore-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/reachmore.css?v=11">
+<style>
+.hand { font-family: 'Caveat', cursive; }
+
+/* grain overlay for a less-perfect, organic feel */
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: .04; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* NAV */
+.nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid var(--line); }
+.nav .inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+.nav .logo { height: 30px; }
+.nav .links { display: flex; gap: 30px; align-items: center; }
+.nav .links a { color: var(--text-dim); font-weight: 500; font-size: 15px; transition: color .2s; }
+.nav .links a:hover { color: var(--text); }
+.nav .right { display: flex; gap: 12px; align-items: center; }
+.icon-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2); display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.icon-btn:hover { color: var(--text); border-color: var(--line-2); }
+.icon-btn svg { width: 18px; height: 18px; }
+@media(max-width:900px){ .nav .links { display: none; } }
+
+/* HERO — asymmetric */
+.hero { position: relative; padding: 70px 0 40px; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 50px; align-items: center; }
+@media(max-width:980px){ .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+.hero h1 { font-size: clamp(40px, 6vw, 74px); font-weight: 900; letter-spacing: -.04em; line-height: 1.02; margin: 20px 0 22px; }
+.hero h1 .scribble { position: relative; white-space: nowrap; }
+.hero h1 .scribble svg { position: absolute; left: -2%; bottom: -14px; width: 104%; height: 18px; }
+.hero .sub { font-size: clamp(17px, 2vw, 20px); color: var(--text-dim); max-width: 48ch; margin-bottom: 26px; }
+.hero .free-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
+.hero .free-chip b { color: var(--text); }
+
+/* prompt box */
+.promptbox { background: var(--bg-1); border: 1px solid var(--line-2); border-radius: 18px; padding: 9px; box-shadow: var(--shadow); position: relative; max-width: 560px; }
+.promptbox::before { content: ''; position: absolute; inset: -1px; border-radius: 19px; padding: 1px; background: var(--rm-grad); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .45; pointer-events: none; }
+.promptbox .top { display: flex; gap: 11px; padding: 8px 8px 2px; }
+.promptbox .spark { width: 32px; height: 32px; border-radius: 9px; background: var(--rm-grad); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.promptbox .spark svg { width: 18px; height: 18px; color: #fff; }
+.promptbox textarea { flex: 1; background: none; border: none; outline: none; resize: none; color: var(--text); font-size: 16px; line-height: 1.5; padding: 5px 0; min-height: 52px; font-family: var(--body); }
+.promptbox .bar { display: flex; align-items: center; justify-content: space-between; padding: 4px 6px 4px 10px; }
+.promptbox .hint { font-size: 12.5px; color: var(--text-faint); }
+.chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; max-width: 560px; }
+
+.hero-anno { position: absolute; right: 6%; top: 6px; color: var(--rm-pink); font-size: 26px; transform: rotate(-8deg); z-index: 5; }
+.hero-anno svg { width: 56px; height: 40px; display: inline-block; vertical-align: middle; }
+@media(max-width:980px){ .hero-anno { display: none; } }
+
+/* floating preview collage (right) */
+.collage { position: relative; height: 440px; }
+@media(max-width:980px){ .collage { height: 320px; } }
+.card-float { position: absolute; border-radius: 18px; border: 1px solid var(--line-2); box-shadow: var(--shadow); overflow: hidden; }
+.cf-1 { width: 74%; right: 0; top: 24px; background: var(--bg-1); transform: rotate(2.5deg); }
+.cf-1 .bar { height: 30px; display: flex; align-items: center; gap: 5px; padding: 0 12px; border-bottom: 1px solid var(--line); }
+.cf-1 .bar i { width: 9px; height: 9px; border-radius: 50%; }
+.cf-1 .body { padding: 20px; }
+.cf-1 .hgrad { height: 90px; border-radius: 12px; background: var(--rm-grad); margin-bottom: 12px; }
+.cf-1 .ln { height: 9px; border-radius: 5px; background: var(--bg-3); margin-bottom: 8px; }
+.cf-2 { width: 46%; left: 0; bottom: 8px; background: var(--bg-1); transform: rotate(-4deg); padding: 16px; }
+.cf-2 .pin { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+.cf-2 .pin .d { width: 26px; height: 26px; border-radius: 8px; background: var(--rm-grad); }
+.cf-2 .ln { height: 8px; border-radius: 5px; background: var(--bg-3); margin-bottom: 7px; }
+.cf-3 { left: 8%; top: 0; background: var(--bg-1); padding: 11px 15px; transform: rotate(5deg); display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; }
+.cf-3 .ico { width: 24px; height: 24px; border-radius: 7px; background: var(--rm-grad); display: flex; align-items: center; justify-content: center; }
+.cf-3 .ico svg { width: 13px; height: 13px; color: #fff; }
+
+/* MARQUEE logos */
+.logos-wrap { padding: 36px 0 0; }
+.logos-wrap p { text-align: center; color: var(--text-faint); font-size: 13px; margin-bottom: 18px; }
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marquee-track { display: flex; gap: 56px; width: max-content; animation: scroll 28s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-track span { font-family: var(--display); font-weight: 800; font-size: 22px; color: var(--text-dim); opacity: .6; white-space: nowrap; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* section heading */
+.shead { max-width: 640px; margin-bottom: 44px; }
+.shead.center { margin-left: auto; margin-right: auto; text-align: center; }
+.shead h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 900; letter-spacing: -.03em; margin-bottom: 14px; }
+.shead p { font-size: 18px; color: var(--text-dim); }
+section.block { padding: 96px 0; position: relative; z-index: 2; }
+
+/* BENTO features */
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 16px; }
+@media(max-width:900px){ .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 190px; } }
+@media(max-width:560px){ .bento { grid-template-columns: 1fr; } }
+.tile { background: var(--bg-1); border: 1px solid var(--line); border-radius: 18px; padding: 24px; position: relative; overflow: hidden; transition: border-color .2s, transform .2s; }
+.tile:hover { border-color: var(--line-2); transform: translateY(-3px); }
+.tile .ic { width: 46px; height: 46px; border-radius: 13px; background: var(--rm-grad-soft); border: 1px solid var(--line); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.tile .ic svg { width: 24px; height: 24px; }
+.tile h3 { font-size: 20px; margin-bottom: 8px; }
+.tile p { color: var(--text-dim); font-size: 14.5px; }
+.tile.wide { grid-column: span 2; }
+.tile.tall { grid-row: span 2; }
+.tile.feat { background: linear-gradient(135deg, color-mix(in srgb, var(--rm-purple) 22%, var(--bg-1)), var(--bg-1) 60%); }
+.tile .big-emoji { font-size: 40px; margin-bottom: 12px; }
+.tile .glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; filter: blur(60px); opacity: .4; right: -40px; bottom: -50px; }
+
+/* SHOWCASE */
+.showcase { position: relative; }
+.mock { border-radius: 18px; border: 1px solid var(--line-2); overflow: hidden; box-shadow: var(--shadow); background: var(--bg-1); transform: perspective(1600px) rotateX(2deg); }
+.mock .topbar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.mock .dots { display: flex; gap: 6px; } .mock .dots i { width: 11px; height: 11px; border-radius: 50%; }
+.mock .url { flex: 1; max-width: 280px; height: 22px; border-radius: 7px; background: var(--bg-3); margin: 0 auto; }
+.mock .body { display: grid; grid-template-columns: 190px 1fr 220px; min-height: 360px; }
+.mock .col { padding: 18px; } .mock .col.l { border-right: 1px solid var(--line); } .mock .col.r { border-left: 1px solid var(--line); }
+.mock .ph { height: 11px; border-radius: 6px; background: var(--bg-3); margin-bottom: 11px; }
+.mock .canvas { background: var(--bg); display: flex; align-items: center; justify-content: center; text-align: center; }
+.mock .canvas .t { font-family: var(--display); font-weight: 900; font-size: 32px; }
+.showcase .anno { position: absolute; z-index: 6; font-family: 'Caveat', cursive; font-size: 24px; color: var(--rm-pink); }
+.showcase .anno.a1 { top: -18px; left: 10%; transform: rotate(-6deg); }
+.showcase .anno.a2 { bottom: -22px; right: 8%; transform: rotate(5deg); }
+@media(max-width:760px){ .mock .body { grid-template-columns: 1fr; } .mock .col.l, .mock .col.r { display: none; } .showcase .anno { display: none; } }
+
+/* TIMELINE steps */
+.timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+@media(max-width:820px){ .timeline { grid-template-columns: 1fr; gap: 30px; } }
+.tstep { padding: 0 26px; position: relative; }
+.tstep:not(:last-child)::after { content: ''; position: absolute; top: 26px; right: -1px; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, var(--line-2) 0 8px, transparent 8px 16px); z-index: 0; }
+@media(max-width:820px){ .tstep::after { display: none; } }
+.tstep .num { width: 54px; height: 54px; border-radius: 16px; background: var(--rm-grad); color: #fff; font-family: var(--display); font-weight: 900; font-size: 24px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; box-shadow: 0 10px 26px -10px var(--rm-pink); }
+.tstep h3 { font-size: 22px; margin: 18px 0 9px; }
+.tstep p { color: var(--text-dim); }
+
+/* TEMPLATES marquee */
+.tpl-row { display: flex; gap: 18px; overflow-x: auto; padding: 6px 4px 18px; scroll-snap-type: x mandatory; }
+.tpl-row::-webkit-scrollbar { height: 8px; }
+.tpl-card { flex: 0 0 300px; scroll-snap-align: start; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-1); cursor: pointer; transition: transform .2s, border-color .2s; }
+.tpl-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+.tpl-card .thumb { height: 175px; position: relative; display: flex; align-items: flex-end; padding: 16px; background-size: cover; background-position: center; }
+.tpl-card .thumb .label { font-family: var(--display); font-weight: 900; font-size: 22px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+.tpl-card .meta { padding: 15px 18px; display: flex; justify-content: space-between; align-items: center; }
+.tpl-card .meta b { font-size: 16px; } .tpl-card .meta span { font-size: 13px; color: var(--text-faint); }
+
+/* FOUNDER note */
+.founder { background: var(--bg-1); border: 1px solid var(--line); border-radius: 24px; padding: 48px; display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center; position: relative; overflow: hidden; }
+@media(max-width:760px){ .founder { grid-template-columns: 1fr; padding: 32px; } }
+.founder .quote { font-family: var(--display); font-size: clamp(20px, 2.6vw, 28px); font-weight: 600; line-height: 1.4; }
+.founder .sign { font-family: 'Caveat', cursive; font-size: 34px; color: var(--rm-pink); margin-top: 16px; }
+.founder .who { color: var(--text-faint); font-size: 14px; margin-top: 2px; }
+.founder .face { width: 130px; height: 130px; border-radius: 50%; background: var(--rm-grad); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 900; font-size: 44px; color: #fff; flex-shrink: 0; }
+
+/* TESTIMONIALS */
+.tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media(max-width:860px){ .tgrid { grid-template-columns: 1fr; } }
+.tcard { background: var(--bg-1); border: 1px solid var(--line); border-radius: 18px; padding: 26px; }
+.tcard:nth-child(2) { transform: rotate(-1.2deg); } .tcard:nth-child(3) { transform: rotate(1deg); }
+.tcard .stars { color: #f5b301; display: flex; gap: 2px; margin-bottom: 14px; } .tcard .stars svg { width: 17px; height: 17px; }
+.tcard p { font-size: 15.5px; line-height: 1.6; margin-bottom: 18px; }
+.tcard .by { display: flex; align-items: center; gap: 11px; }
+.tcard .av { width: 40px; height: 40px; border-radius: 50%; background: var(--rm-grad); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+.tcard .by b { display: block; font-size: 14px; } .tcard .by span { font-size: 12.5px; color: var(--text-faint); }
+
+/* PRICING */
+.price-banner { display: flex; align-items: center; gap: 14px; justify-content: center; background: var(--rm-grad-soft); border: 1px solid var(--line); border-radius: 14px; padding: 14px 20px; margin: 0 auto 38px; max-width: 640px; font-size: 15px; font-weight: 600; }
+.price-banner .tag { background: var(--rm-grad); color: #fff; font-size: 12px; font-weight: 800; padding: 4px 11px; border-radius: 99px; white-space: nowrap; }
+.pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+@media(max-width:820px){ .pgrid { grid-template-columns: 1fr; } }
+.ptier { background: var(--bg-1); border: 1px solid var(--line); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; }
+.ptier.hi { border: 2px solid transparent; background: linear-gradient(var(--bg-1),var(--bg-1)) padding-box, var(--rm-grad) border-box; position: relative; }
+.ptier .tag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--rm-grad); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 15px; border-radius: 99px; }
+.ptier h3 { font-size: 21px; } .ptier .lbl { color: var(--text-faint); font-size: 13px; margin-top: 2px; }
+.ptier .amt { font-family: var(--display); font-size: 48px; font-weight: 900; margin: 14px 0 2px; } .ptier .amt small { font-size: 16px; color: var(--text-dim); font-weight: 500; }
+.ptier ul { list-style: none; margin: 20px 0 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.ptier li { display: flex; gap: 10px; color: var(--text-dim); font-size: 14.5px; } .ptier li svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+.ptier li b { color: var(--text); }
+
+/* FAQ */
+.faq { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq details { background: var(--bg-1); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; }
+.faq summary { font-weight: 700; font-size: 17px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; color: var(--text-faint); font-size: 22px; }
+.faq details[open] summary::after { content: '–'; }
+.faq p { color: var(--text-dim); margin-top: 12px; }
+
+/* CTA */
+.ctab { text-align: center; border-radius: 28px; padding: 76px 32px; background: var(--rm-grad); color: #fff; position: relative; overflow: hidden; }
+.ctab h2 { font-size: clamp(30px, 5vw, 52px); font-weight: 900; margin-bottom: 14px; }
+.ctab p { font-size: 19px; opacity: .92; margin-bottom: 28px; }
+.ctab .btn { background: #fff; color: #14141d; }
+.ctab .hand { position: absolute; bottom: 18px; right: 26px; font-size: 26px; opacity: .9; transform: rotate(-5deg); }
+
+/* FOOTER */
+footer.ft { border-top: 1px solid var(--line); padding: 58px 0 40px; position: relative; z-index: 2; }
+footer.ft .grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 38px; }
+@media(max-width:760px){ footer.ft .grid { grid-template-columns: 1fr 1fr; } }
+footer.ft .logo { height: 28px; margin-bottom: 14px; }
+footer.ft h5 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); margin-bottom: 14px; }
+footer.ft a { display: block; color: var(--text-dim); font-size: 15px; margin-bottom: 10px; }
+footer.ft a:hover { color: var(--text); }
+footer.ft .bottom { border-top: 1px solid var(--line); padding-top: 22px; display: flex; justify-content: space-between; color: var(--text-faint); font-size: 14px; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container inner">
+    <img class="logo" src="assets/img/reachmore-logo.png" alt="Reachmore">
+    <nav class="links">
+      <a href="#features">Funktioner</a>
+      <a href="#how">Sådan virker det</a>
+      <a href="#templates">Skabeloner</a>
+      <a href="#pricing">Priser</a>
+      <a href="domaener.html">Domæner</a>
+    </nav>
+    <div class="right">
+      <button class="icon-btn" id="themeToggle" title="Skift tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      </button>
+      <div id="acct"></div>
+      <a class="btn btn-primary" href="studio.html">Åbn Studio</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero container">
+  <div class="hero-anno">
+    <svg viewBox="0 0 60 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6c14 2 30 10 40 26"/><path d="M44 32l1-12M44 32l-12 1"/></svg>
+  </div>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow reveal"><span class="dot"></span> Den danske AI website-builder</div>
+      <h1 class="reveal">Skriv en sætning.<br>Få et <span class="scribble rm-grad-text">website<svg viewBox="0 0 300 18" preserveAspectRatio="none"><path d="M3 12 C 60 4, 120 16, 180 9 S 280 4, 297 11" fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg></span>.</h1>
+      <p class="sub reveal">Reachmore forvandler din idé til et færdigt, redigerbart website på sekunder. Du finpudser visuelt. <b style="color:var(--text)">Det er gratis at bygge</b> — du betaler først når du vil udgive.</p>
+
+      <div class="reveal">
+        <div class="free-chip"><span class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--rm-grad)"></span> Start med <b>1.500 gratis AI-tokens</b> · intet kort påkrævet</div>
+        <div class="promptbox">
+          <div class="top">
+            <div class="spark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z" fill="currentColor"/></svg></div>
+            <textarea id="prompt" placeholder="Fx: En hyggelig café i Aarhus med menu, galleri og online booking…"></textarea>
+          </div>
+          <div class="bar">
+            <span class="hint">Tryk Enter ↵</span>
+            <button class="btn btn-primary" id="genBtn">Byg med AI →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chips reveal">
+        <button class="chip" data-p="En hyggelig café i Aarhus med menu, galleri og online booking">☕ Café</button>
+        <button class="chip" data-p="Et website til mit marketingbureau med portfolio, team og priser">🚀 Bureau</button>
+        <button class="chip" data-p="En personlig portfolio til en fotograf med galleri">📷 Fotograf</button>
+        <button class="chip" data-p="En webshop til tøj med produkter og gratis fragt">🛍️ Webshop</button>
+        <button class="chip" data-p="Et website til min frisørsalon med booking og priser">💇 Salon</button>
+      </div>
+    </div>
+
+    <!-- floating collage -->
+    <div class="collage reveal">
+      <div class="card-float cf-1">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <div class="body"><div class="hgrad"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:70%"></div></div>
+      </div>
+      <div class="card-float cf-2">
+        <div class="pin"><div class="d"></div><div class="ln" style="width:60px;margin:0"></div></div>
+        <div class="ln" style="width:100%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:92%"></div><div class="ln" style="width:70%"></div>
+      </div>
+      <div class="card-float cf-3">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z" fill="currentColor"/></svg></div>
+        AI genererer…
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos-wrap container">
+  <p>Brugt af tusindvis af danske skabere, små virksomheder og freelancere</p>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Nordisk Studio</span><span>Lumen</span><span>Vega Foto</span><span>Atlas</span><span>Forma</span><span>Kvist &amp; Co</span><span>Solhjørnet</span><span>Pulse</span>
+      <span>Nordisk Studio</span><span>Lumen</span><span>Vega Foto</span><span>Atlas</span><span>Forma</span><span>Kvist &amp; Co</span><span>Solhjørnet</span><span>Pulse</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES (bento) -->
+<section class="block container" id="features">
+  <div class="shead reveal">
+    <h2>Alt foregår på ét sted</h2>
+    <p>Ingen plugins, ingen kode, ingen kaos. Bare dig, en god idé og en AI der gør benarbejdet.</p>
+  </div>
+  <div class="bento">
+    <div class="tile feat tall reveal">
+      <div class="glow" style="background:var(--rm-purple)"></div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z" fill="currentColor"/></svg></div>
+      <h3>AI der forstår dig</h3>
+      <p>Beskriv din virksomhed på dansk. Reachmore genkender din branche og bygger passende sektioner, tekst og farver — skræddersyet til dig.</p>
+      <div style="position:absolute;bottom:20px;left:24px;right:24px;display:flex;gap:7px;flex-wrap:wrap">
+        <span class="chip" style="cursor:default">Café</span><span class="chip" style="cursor:default">Bureau</span><span class="chip" style="cursor:default">Klinik</span><span class="chip" style="cursor:default">+15 brancher</span>
+      </div>
+    </div>
+    <div class="tile wide reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
+      <h3>Træk, slip & redigér live</h3>
+      <p>Klik på enhver sektion og ret tekst direkte. Flyt rundt. Se ændringer med det samme — præcis som de store designværktøjer.</p>
+    </div>
+    <div class="tile reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor"/></svg></div>
+      <h3>Dit udtryk</h3>
+      <p>Skift farver, fonte & stil på ét sekund.</p>
+    </div>
+    <div class="tile reveal">
+      <div class="big-emoji">📱</div>
+      <h3>Responsivt</h3>
+      <p>Perfekt på mobil, tablet og desktop.</p>
+    </div>
+    <div class="tile wide reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15c-1 1-1 4-1 4s3 0 4-1m6.5-9.5a4 4 0 11-1.5-1.5"/><path d="M14 4c4 1 6 5 6 9-2 0-5-1-6-2s-2-4-2-6c0 0 1-1 2-1z"/></svg></div>
+      <h3>Udgiv på sekunder</h3>
+      <p>Gå live på et reachmore.app-link eller dit eget domæne — eller eksportér ren HTML og host hvor du vil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="block container showcase">
+  <div class="shead center reveal"><h2>Mød Reachmore Studio</h2><p>En rigtig visuel editor — ikke bare en formular.</p></div>
+  <div class="reveal" style="position:relative">
+    <span class="anno a1 hand">← vælg en sektion</span>
+    <span class="anno a2 hand">ret farver her →</span>
+    <div class="mock">
+      <div class="topbar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><div class="url"></div></div>
+      <div class="body">
+        <div class="col l"><div class="ph" style="width:60%"></div><div class="ph"></div><div class="ph" style="width:85%"></div><div class="ph" style="width:70%"></div><div class="ph"></div><div class="ph" style="width:55%"></div></div>
+        <div class="col canvas"><div><div class="t rm-grad-text">Dit website</div><div class="ph" style="width:170px;margin:16px auto 0"></div><div class="ph" style="width:130px;margin:10px auto 0"></div></div></div>
+        <div class="col r"><div class="ph" style="width:50%"></div><div class="ph"></div><div class="ph" style="width:80%"></div><div class="ph" style="width:65%"></div><div class="ph" style="width:90%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="block container" id="how">
+  <div class="shead center reveal"><h2>Fra tom side til live på 3 trin</h2></div>
+  <div class="timeline">
+    <div class="tstep reveal"><div class="num">1</div><h3>Beskriv</h3><p>Skriv én sætning om din virksomhed. Det er alt AI'en behøver for at komme i gang.</p></div>
+    <div class="tstep reveal"><div class="num">2</div><h3>Tilpas</h3><p>Ret tekst, skift farver og flyt sektioner rundt, til det føles helt rigtigt.</p></div>
+    <div class="tstep reveal"><div class="num">3</div><h3>Udgiv</h3><p>Vælg en plan og send dit website live på dit eget domæne — på sekunder.</p></div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="block container" id="templates">
+  <div class="shead reveal"><h2>Eller start fra en skabelon</h2><p>Åbn en, og gør den til din egen med AI. Træk i den til siden →</p></div>
+  <div class="tpl-row reveal">
+    <div class="tpl-card" data-p="En hyggelig café med menu, galleri og online booking"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/cafe.jpg')"><span class="label">Café</span></div><div class="meta"><b>Café & Restaurant</b><span>Mad & drikke</span></div></div>
+    <div class="tpl-card" data-p="Et website til mit marketingbureau med portfolio, team og priser"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/bureau.jpg')"><span class="label">Bureau</span></div><div class="meta"><b>Bureau</b><span>Agentur</span></div></div>
+    <div class="tpl-card" data-p="En personlig portfolio til en fotograf med galleri"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/fotograf.jpg')"><span class="label">Foto</span></div><div class="meta"><b>Fotograf</b><span>Portfolio</span></div></div>
+    <div class="tpl-card" data-p="En webshop til tøj med produkter og gratis fragt"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/shop.jpg')"><span class="label">Shop</span></div><div class="meta"><b>Webshop</b><span>E-commerce</span></div></div>
+    <div class="tpl-card" data-p="Et website til min klinik med behandlinger, team og tidsbestilling"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/klinik.jpg')"><span class="label">Klinik</span></div><div class="meta"><b>Klinik</b><span>Sundhed</span></div></div>
+    <div class="tpl-card" data-p="Et website til mit fitnesscenter med hold og medlemskaber"><div class="thumb" style="background-image:linear-gradient(180deg,rgba(10,10,15,.05),rgba(10,10,15,.6)),url('assets/img/pexels/fitness.jpg')"><span class="label">Fitness</span></div><div class="meta"><b>Fitness</b><span>Sport</span></div></div>
+  </div>
+</section>
+
+<!-- FOUNDER NOTE -->
+<section class="block container">
+  <div class="founder reveal">
+    <div class="glow" style="position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(80px);opacity:.25;background:var(--rm-grad);right:-60px;top:-60px"></div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:18px"><span class="dot"></span> Et par ord fra os</div>
+      <p class="quote">"Vi var trætte af at en simpel hjemmeside skulle koste en formue eller tage uger. Så vi byggede Reachmore — så du kan gå fra idé til live website samme eftermiddag, uden at kunne kode."</p>
+      <div class="sign">— Reachmore-holdet</div>
+      <div class="who">Grundlæggere, København</div>
+    </div>
+    <div class="face">R</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="block container">
+  <div class="shead center reveal"><h2>Folk bygger allerede med Reachmore</h2></div>
+  <div class="tgrid">
+    <div class="tcard reveal">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg></div>
+      <p>"Jeg beskrev min café i én sætning, og fem minutter senere stod siden der. Jeg rettede bare teksten og udgav."</p>
+      <div class="by"><div class="av">MK</div><div><b>Mette Krøyer</b><span>Ejer, Solhjørnet Café</span></div></div>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg></div>
+      <p>"Som freelancer sparer det mig timer. Jeg laver nu hjemmesider til mine kunder på en eftermiddag i stedet for en uge."</p>
+      <div class="by"><div class="av">JB</div><div><b>Jonas Berg</b><span>Freelance designer</span></div></div>
+    </div>
+    <div class="tcard reveal">
+      <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 6.5L21 10l-5 4.5 1.5 6.5L12 17l-5.5 4 1.5-6.5L3 10l6.5-.5L12 3z"/></svg></div>
+      <p>"Endelig et værktøj på dansk der bare virker. AI-botten hjalp mig hele vejen igennem."</p>
+      <div class="by"><div class="av">SL</div><div><b>Sofie Lund</b><span>Indehaver, Glow Studio</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="block container" id="pricing">
+  <div class="shead center reveal"><h2>Byg gratis. Betal kun for at udgive.</h2><p>Du kan bygge og lege så meget du vil uden at betale. Når du er klar til at gå live, vælger du en plan.</p></div>
+  <div class="price-banner reveal"><span class="tag">Gratis</span> Bygning, redigering og 1.500 AI-tokens koster <b style="color:var(--text);margin:0 4px">0 kr.</b> for evigt.</div>
+  <p class="reveal" style="text-align:center;color:var(--text-faint);font-size:14px;margin:-22px auto 30px;max-width:560px">💡 AI-tokens i de betalte planer fornyes <b style="color:var(--text-dim)">automatisk hver måned</b> — fx får Start 50.000 nye tokens hver eneste måned.</p>
+  <div class="pgrid">
+    <div class="ptier reveal">
+      <h3>Start</h3><div class="lbl">Til den der starter</div>
+      <div class="amt">99 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span><b>1</b> udgivet website</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span><b>50.000</b> AI-tokens <b>hver måned</b></span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Eget reachmore.app-domæne</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>E-mail support</span></li>
+      </ul>
+      <a class="btn btn-ghost btn-block" href="studio.html">Byg gratis først</a>
+    </div>
+    <div class="ptier hi reveal">
+      <div class="tag">Mest populær</div>
+      <h3>Pro</h3><div class="lbl">Til seriøse skabere</div>
+      <div class="amt">199 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span><b>Ubegrænsede</b> udgivelser</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span><b>200.000</b> AI-tokens <b>hver måned</b></span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Eget domæne + ingen badge</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Avanceret statistik</span></li>
+      </ul>
+      <a class="btn btn-primary btn-block" href="studio.html">Vælg Pro</a>
+    </div>
+    <div class="ptier reveal">
+      <h3>Business</h3><div class="lbl">Til teams & bureauer</div>
+      <div class="amt">399 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Alt i Pro</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span><b>1.000.000</b> AI-tokens <b>hver måned</b></span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Team-samarbejde</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span>Dedikeret rådgiver & SLA</span></li>
+      </ul>
+      <a class="btn btn-ghost btn-block" href="studio.html">Vælg Business</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="block container" id="faq">
+  <div class="shead center reveal"><h2>Spørgsmål? Vi har svar.</h2></div>
+  <div class="faq reveal">
+    <details open><summary>Er det virkelig gratis at bygge?</summary><p>Ja. Du kan bygge, redigere og lege med dit website helt gratis — og du får 1.500 AI-tokens til at komme i gang. Du betaler først, når du vil udgive dit website live.</p></details>
+    <details><summary>Hvad er AI-tokens — og fornyes de hver måned?</summary><p>Tokens er den "brændstof" AI'en bruger. At generere et helt website koster 250 tokens, en enkelt sektion 60. <b>Ja — i alle betalte planer fornyes dine tokens automatisk hver måned:</b> Start får 50.000, Pro 200.000 og Business 1.000.000 nye tokens hver måned, så længe abonnementet kører.</p></details>
+    <details><summary>Skal jeg kunne kode?</summary><p>Nej. Alt foregår visuelt med AI og træk-og-slip. Du beskriver hvad du vil have, og Reachmore bygger det.</p></details>
+    <details><summary>Kan jeg bruge mit eget domæne?</summary><p>Ja. På Pro- og Business-planerne kobler du nemt dit eget domæne på dit website.</p></details>
+    <details><summary>Kan jeg eksportere min kode?</summary><p>Ja. Med en betalt plan kan du eksportere ren HTML/CSS, så du ejer din kode og kan hoste den hvor som helst.</p></details>
+    <details><summary>Er der binding?</summary><p>Nej. Du kan opgradere, nedgradere eller opsige når som helst.</p></details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="block container">
+  <div class="ctab reveal">
+    <h2>Din næste hjemmeside er én sætning væk.</h2>
+    <p>Det er gratis at starte — prøv det nu.</p>
+    <a class="btn btn-lg" href="studio.html">Byg mit website →</a>
+    <span class="hand">det tager 2 minutter ✦</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ft">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <img class="logo" src="assets/img/reachmore-logo.png" alt="Reachmore">
+        <p class="muted" style="max-width:30ch">Den danske AI website-builder. Byg mere. Nå længere.</p>
+      </div>
+      <div><h5>Produkt</h5><a href="#features">Funktioner</a><a href="#templates">Skabeloner</a><a href="#pricing">Priser</a><a href="domaener.html">Domæner &amp; hosting</a><a href="studio.html">Studio</a></div>
+      <div><h5>Virksomhed</h5><a href="om-os.html">Om os</a><a href="blog.html">Blog</a><a href="karriere.html">Karriere</a><a href="kontakt.html">Kontakt</a></div>
+      <div><h5>Ressourcer</h5><a href="#faq">FAQ</a><a href="hjaelp.html">Hjælp</a><a href="privatliv.html">Privatliv</a><a href="vilkaar.html">Vilkår</a></div>
+    </div>
+    <div class="bottom"><span>© 2026 Reachmore — et produkt fra Lindeholm Ltd (HE 482155), Cypern.</span><span>Lavet med 💜 i Danmark</span></div>
+  </div>
+</footer>
+
+<script src="assets/js/blocks.js?v=11"></script>
+<script src="assets/js/store.js?v=11"></script>
+<script src="assets/js/tokens.js?v=11"></script>
+<script src="assets/js/auth.js?v=11"></script>
+<script src="assets/js/bot.js?v=11"></script>
+<script src="assets/js/landing.js?v=11"></script>
+</body>
+</html>

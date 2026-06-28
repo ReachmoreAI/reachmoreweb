@@ -1,0 +1,158 @@
+{
+  "name": "@builder.io/sdk-react",
+  "description": "Builder.io SDK for React",
+  "version": "5.2.3",
+  "homepage": "https://github.com/BuilderIO/builder/tree/main/packages/sdks/output/react",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuilderIO/builder.git",
+    "directory": "packages/sdks/output/react"
+  },
+  "files": [
+    "lib",
+    "types"
+  ],
+  "types": "./types/index.d.ts",
+  "main": "./lib/node/index.cjs",
+  "module": "./lib/node/index.mjs",
+  "exports": {
+    ".": {
+      "edge-routine": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "workerd": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "deno": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "lagon": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "netlify": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "edge-light": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "bun": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/edge/edge-entry.mjs",
+        "require": "./lib/edge/edge-entry.cjs"
+      },
+      "react-native": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "electron": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "node": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "browser": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/browser/index.mjs",
+        "require": "./lib/browser/index.cjs"
+      },
+      "default": {
+        "types": "./types/index.d.ts",
+        "import": "./lib/browser/index.mjs",
+        "require": "./lib/browser/index.cjs"
+      },
+      "types": "./types/index.d.ts"
+    },
+    "./node/init": {
+      "types": "./types/functions/evaluate/node-runtime/init.d.ts",
+      "import": "./lib/node/init.mjs",
+      "require": "./lib/node/init.cjs"
+    },
+    "./node/setIvm": {
+      "types": "./types/functions/evaluate/node-runtime/setIvm.d.ts",
+      "import": "./lib/node/setIvm.mjs",
+      "require": "./lib/node/setIvm.cjs"
+    },
+    "./edge": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/edge/edge-entry.mjs",
+      "require": "./lib/edge/edge-entry.cjs"
+    },
+    "./bundle/edge": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/edge/index.mjs",
+      "require": "./lib/edge/index.cjs"
+    },
+    "./bundle/node": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/node/index.mjs",
+      "require": "./lib/node/index.cjs"
+    },
+    "./bundle/browser": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/browser/index.mjs",
+      "require": "./lib/browser/index.cjs"
+    }
+  },
+  "scripts": {
+    "release": "npm publish",
+    "build-inline-fns": "yarn g:build-inline-fns",
+    "types": "tsc",
+    "build": "yarn g:nx run-many -p @builder.io/sdk-react -t types build:node build:edge build:browser",
+    "build:node": "SDK_ENV=node vite build --mode lib",
+    "build:edge": "SDK_ENV=edge vite build --mode lib",
+    "build:browser": "SDK_ENV=browser vite build --mode lib"
+  },
+  "peerDependencies": {
+    "react": ">=16 || ^19.0.0-rc"
+  },
+  "dependencies": {
+    "isolated-vm": "^6.0.0"
+  },
+  "devDependencies": {
+    "@builder.io/sdks": "workspace:*",
+    "@vitejs/plugin-react": "^4.0.4",
+    "react": "^18.2.0",
+    "recast": "^0.23.4",
+    "typescript": "^4.9.4",
+    "vite": "^4.5.11"
+  },
+  "nx": {
+    "targets": {
+      "build-inline-fns": {
+        "dependsOn": [
+          "^build:react"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "build-inline-fns",
+          "^build:react",
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/lib",
+          "{projectRoot}/types"
+        ]
+      }
+    }
+  },
+  "stableVersion": "2.0.23"
+}

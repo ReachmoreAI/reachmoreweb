@@ -1,0 +1,98 @@
+{
+  "name": "@builder.io/sdk-svelte",
+  "description": "Builder.io SDK for Svelte",
+  "version": "5.2.3",
+  "type": "module",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/BuilderIO/builder/tree/main/packages/sdks/output/svelte",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuilderIO/builder.git",
+    "directory": "packages/sdks/output/svelte"
+  },
+  "main": "./lib/node/index.js",
+  "module": "./lib/node/index.js",
+  "svelte": "./lib/browser/index.js",
+  "exports": {
+    ".": {
+      "svelte": "./lib/browser/index.js",
+      "node": "./lib/node/index.js",
+      "browser": "./lib/browser/index.js",
+      "edge-routine": "./lib/edge/index.js",
+      "workerd": "./lib/edge/index.js",
+      "deno": "./lib/edge/index.js",
+      "lagon": "./lib/edge/index.js",
+      "netlify": "./lib/edge/index.js",
+      "edge-light": "./lib/edge/index.js",
+      "bun": "./lib/edge/index.js",
+      "electron": "./lib/node/index.js",
+      "default": "./lib/browser/index.js",
+      "types": "./lib/browser/index.d.ts"
+    },
+    "./bundle/edge": "./lib/edge/index.js",
+    "./bundle/node": "./lib/node/index.js",
+    "./bundle/browser": "./lib/browser/index.js"
+  },
+  "types": "./lib/browser/index.d.ts",
+  "scripts": {
+    "release": "npm publish",
+    "build-inline-fns": "yarn g:build-inline-fns",
+    "prepare": "SDK_ENV=browser svelte-kit sync",
+    "build": "yarn g:nx run-many -p @builder.io/sdk-svelte -t build:node build:edge build:browser --parallel=false",
+    "build:node": "SDK_ENV=node svelte-package -i src/ -o lib/node",
+    "build:edge": "SDK_ENV=edge svelte-package -i src/ -o lib/edge",
+    "build:browser": "SDK_ENV=browser svelte-package -i src/ -o lib/browser",
+    "check": "SDK_ENV=browser svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "isolated-vm": "^6.0.0"
+  },
+  "devDependencies": {
+    "@builder.io/sdks": "workspace:*",
+    "@sveltejs/adapter-auto": "^2.1.0",
+    "@sveltejs/kit": "^1.22.4",
+    "@sveltejs/package": "^2.2.0",
+    "svelte": "^4.1.2",
+    "svelte-check": "^3.4.6",
+    "svelte-preprocess": "^5.0.4",
+    "tslib": "^2.3.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.5.11"
+  },
+  "nx": {
+    "targets": {
+      "prepare": {
+        "dependsOn": [
+          "build-inline-fns",
+          "^build:svelte",
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/.svelte-kit"
+        ]
+      },
+      "build-inline-fns": {
+        "dependsOn": [
+          "^build:svelte"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "build-inline-fns",
+          "^build:svelte",
+          "^build",
+          "prepare"
+        ],
+        "outputs": [
+          "{projectRoot}/lib"
+        ]
+      }
+    }
+  },
+  "peerDependencies": {
+    "svelte": "^4.1.2"
+  }
+}

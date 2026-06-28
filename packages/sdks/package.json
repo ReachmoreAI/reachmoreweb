@@ -1,0 +1,162 @@
+{
+  "name": "@builder.io/sdks",
+  "private": true,
+  "scripts": {
+    "g:build-inline-fns": "node ./output-generation/build-inline-fns.mjs",
+    "build-mitosis": "../../node_modules/@builder.io/mitosis-cli/bin/mitosis build",
+    "build:angular": "yarn build-mitosis --target=angular && yarn run set-sdk-version angular",
+    "build:react": "yarn build-mitosis --target=react && yarn run set-sdk-version react",
+    "build:qwik": "yarn build-mitosis --target=qwik && yarn run set-sdk-version qwik",
+    "build:svelte": "yarn build-mitosis --target=svelte && yarn run set-sdk-version svelte",
+    "build:solid": "yarn build-mitosis --target=solid && yarn run set-sdk-version solid",
+    "build:react-native": "yarn build-mitosis --target=reactNative && yarn run set-sdk-version react-native",
+    "build:vue": "yarn build-mitosis --target=vue && yarn run set-sdk-version vue",
+    "build:nextjs": "yarn build-mitosis --target=rsc && yarn run set-sdk-version nextjs",
+    "build:all": "yarn build-mitosis",
+    "start": "watch 'yarn run build-mitosis' ./src ./overrides",
+    "_start": "TARGET_WORKSPACE=${WORKSPACE:-$SDK}; watch \"yarn run build-mitosis --target=$SDK && yarn workspace @builder.io/sdk-$TARGET_WORKSPACE run build\" ./src ./overrides",
+    "start:angular": "SDK=angular yarn _start",
+    "start:react": "SDK=react yarn _start",
+    "start:qwik": "SDK=qwik yarn _start",
+    "start:svelte": "SDK=svelte yarn _start",
+    "start:solid": "SDK=solid yarn _start",
+    "start:reactNative": "SDK=reactNative WORKSPACE=react-native yarn _start",
+    "start:vue": "SDK=vue yarn _start",
+    "start:rsc": "SDK=rsc WORKSPACE=react-nextjs yarn _start",
+    "test:update": "yarn test:browser --update && yarn test:node --update && yarn test:edge --update",
+    "test": "yarn test:browser && yarn test:node && yarn test:edge",
+    "test:browser": "SDK_ENV=browser vitest run",
+    "test:node": "SDK_ENV=node vitest run",
+    "test:edge": "SDK_ENV=edge vitest run",
+    "test:node:watch": "SDK_ENV=node vitest",
+    "remove-symlinks": "./scripts/remove-resolutions.sh && yarn",
+    "add-symlinks": "./scripts/add-resolutions.sh && yarn",
+    "upgrade-mitosis:dev": "yarn up @builder.io/mitosis@dev @builder.io/mitosis-cli@dev @builder.io/eslint-plugin-mitosis@dev",
+    "upgrade-mitosis": "yarn up @builder.io/mitosis @builder.io/mitosis-cli @builder.io/eslint-plugin-mitosis",
+    "prettier": "prettier .",
+    "lint": "yarn run prettier --write && yarn run eslint --fix",
+    "eslint": "eslint . --quiet",
+    "eslint:watch": "watch 'yarn run eslint' ./src ./overrides",
+    "g:publint": "cd $INIT_CWD && publint",
+    "g:attw": "cd $INIT_CWD && attw --pack .",
+    "g:pkg:lint": "cd $INIT_CWD && yarn g:publint && yarn g:attw",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "yarn run typecheck --watch",
+    "ci:lint:sdks": "yarn run prettier --check && yarn run eslint",
+    "e2e:run:svelte": "SERVER_NAME=svelte,sveltekit yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:react-native": "SERVER_NAME=react-native-74,react-native-76-fabric yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:solid": "SERVER_NAME=solid,solid-start yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:qwik": "SERVER_NAME=qwik-city yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:react": "SERVER_NAME=react,react-sdk-next-pages,react-sdk-next-14-app,react-sdk-next-15-app yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:nextjs": "SERVER_NAME=nextjs-sdk-next-app yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:vue": "SERVER_NAME=vue,nuxt yarn g:nx test:e2e @sdk/tests",
+    "e2e:run:angular": "SERVER_NAME=angular-17,angular-17-ssr,angular-19-ssr yarn g:nx test:e2e @sdk/tests",
+    "loop": "bash ./scripts/loop-command.sh",
+    "set-sdk-version": "bash ./scripts/set-sdk-version.sh",
+    "upgrade-example": "bash ./scripts/upgrade-example.sh",
+    "upgrade-example:all": "yarn loop upgrade-example latest"
+  },
+  "dependencies": {
+    "@builder.io/mitosis": "^0.13.2",
+    "@builder.io/mitosis-cli": "^0.13.2",
+    "isolated-vm": "^6.0.0",
+    "node-fetch": "^2.6.1",
+    "seedrandom": "^3.0.5",
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.13.3",
+    "@builder.io/eslint-plugin-mitosis": "^0.0.16",
+    "@types/node-fetch": "^2.5.12",
+    "@types/seedrandom": "^3.0.4",
+    "@types/traverse": "^0.6.32",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "glob": "^11.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "publint": "^0.2.6",
+    "recast": "^0.23.4",
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0",
+    "watch": "^1.0.2"
+  },
+  "engines": {
+    "yarn": ">= 3.0.0"
+  },
+  "nx": {
+    "targets": {
+      "build:react": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/react/src"
+        ]
+      },
+      "build:qwik": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/qwik/src"
+        ]
+      },
+      "build:svelte": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/svelte/src"
+        ]
+      },
+      "build:solid": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/solid/src"
+        ]
+      },
+      "build:react-native": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/react-native/src"
+        ]
+      },
+      "build:vue": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/vue/src"
+        ]
+      },
+      "build:nextjs": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/nextjs/src"
+        ]
+      },
+      "build:angular": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/angular/src"
+        ]
+      }
+    },
+    "implicitDependencies": [
+      "@builder.io/react"
+    ]
+  }
+}

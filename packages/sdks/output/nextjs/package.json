@@ -1,0 +1,136 @@
+{
+  "name": "@builder.io/sdk-react-nextjs",
+  "description": "Builder.io RSC SDK for NextJS App Directory",
+  "version": "0.25.3",
+  "homepage": "https://github.com/BuilderIO/builder/tree/main/packages/sdks/output/nextjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuilderIO/builder.git",
+    "directory": "packages/sdks/output/nextjs"
+  },
+  "files": [
+    "lib",
+    "types"
+  ],
+  "types": "./types/index.d.ts",
+  "main": "./lib/node/index.cjs",
+  "module": "./lib/node/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "browser": {
+        "import": "./lib/browser/index.mjs",
+        "require": "./lib/browser/index.cjs"
+      },
+      "edge-routine": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "workerd": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "deno": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "lagon": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "netlify": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "edge-light": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "bun": {
+        "import": "./lib/edge/index.mjs",
+        "require": "./lib/edge/index.cjs"
+      },
+      "react-native": {
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "electron": {
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.cjs"
+      },
+      "default": {
+        "import": "./lib/browser/index.mjs",
+        "require": "./lib/browser/index.cjs"
+      },
+      "types": "./types/index.d.ts"
+    },
+    "./node/init": {
+      "types": "./types/esm/functions/evaluate/node-runtime/init.d.ts",
+      "import": "./lib/node/init.mjs",
+      "require": "./lib/node/init.cjs"
+    },
+    "./bundle/edge": {
+      "import": "./lib/edge/index.mjs",
+      "require": "./lib/edge/index.cjs"
+    },
+    "./bundle/node": {
+      "import": "./lib/node/index.mjs",
+      "require": "./lib/node/index.cjs"
+    },
+    "./bundle/browser": {
+      "import": "./lib/browser/index.mjs",
+      "require": "./lib/browser/index.cjs"
+    }
+  },
+  "scripts": {
+    "release": "npm publish",
+    "build-inline-fns": "yarn g:build-inline-fns",
+    "types:cjs": "yarn tsc --p ./tsconfig.cjs.json",
+    "types:esm": "yarn tsc --p ./tsconfig.esm.json",
+    "build": "yarn g:nx run-many -p @builder.io/sdk-react-nextjs -t types:cjs types:esm build:node build:edge build:browser",
+    "build:node": "SDK_ENV=node vite build --mode lib",
+    "build:edge": "SDK_ENV=edge vite build --mode lib",
+    "build:browser": "SDK_ENV=browser vite build --mode lib"
+  },
+  "peerDependencies": {
+    "next": ">=13.5.9",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "devDependencies": {
+    "@builder.io/sdks": "workspace:*",
+    "@vitejs/plugin-react": "^4.0.4",
+    "next": ">=13.5.9",
+    "react": "^18.2.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.5.11"
+  },
+  "dependencies": {
+    "isolated-vm": "^6.0.0"
+  },
+  "nx": {
+    "targets": {
+      "build-inline-fns": {
+        "dependsOn": [
+          "^build:nextjs"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "build-inline-fns",
+          "^build:nextjs",
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/lib",
+          "{projectRoot}/types"
+        ]
+      }
+    }
+  },
+  "stableVersion": "0.14.29"
+}

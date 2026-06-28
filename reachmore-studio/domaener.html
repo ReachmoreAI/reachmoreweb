@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="da" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domæner & hosting — Reachmore</title>
+<meta name="description" content="Køb dit domæne og din hosting direkte i Reachmore — alt samlet ét sted. Fra 49 kr/år.">
+<link rel="icon" href="assets/img/reachmore-logo.png">
+<link rel="stylesheet" href="assets/css/reachmore.css?v=11">
+<style>
+.dh-hero { text-align: center; padding: 56px 0 10px; }
+.dh-hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 900; letter-spacing: -.03em; }
+.dh-hero p { color: var(--text-dim); font-size: 18px; max-width: 56ch; margin: 12px auto 0; }
+.search { max-width: 640px; margin: 28px auto 0; display: flex; gap: 10px; }
+.search input { flex: 1; background: var(--bg-1); border: 1px solid var(--line-2); border-radius: 13px; padding: 16px 18px; font-size: 17px; color: var(--text); outline: none; }
+.search input:focus { border-color: var(--accent); box-shadow: var(--ring); }
+.results { max-width: 640px; margin: 22px auto 0; display: flex; flex-direction: column; gap: 10px; }
+.dom { display: flex; align-items: center; gap: 14px; background: var(--bg-1); border: 1px solid var(--line); border-radius: 13px; padding: 15px 18px; }
+.dom .nm { font-family: var(--display); font-weight: 700; font-size: 18px; flex: 1; }
+.dom .av { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+.dom .av.ok { background: rgba(16,185,129,.14); color: #34d399; } .dom .av.no { background: rgba(239,68,68,.12); color: #f87171; }
+.dom .pr { font-weight: 800; font-family: var(--display); }
+.dom .pr small { font-weight: 500; color: var(--text-faint); font-size: 12px; }
+.sec { max-width: 1080px; margin: 0 auto; padding: 70px 24px; }
+.sec h2 { font-size: clamp(26px,3.4vw,38px); font-weight: 900; text-align: center; margin-bottom: 8px; }
+.sec .sub { text-align: center; color: var(--text-dim); margin-bottom: 36px; }
+.host { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; align-items: stretch; }
+@media(max-width:820px){ .host { grid-template-columns: 1fr; } }
+.htier { background: var(--bg-1); border: 1px solid var(--line); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; }
+.htier.hi { border: 2px solid transparent; background: linear-gradient(var(--bg-1),var(--bg-1)) padding-box, var(--rm-grad) border-box; position: relative; }
+.htier .tag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--rm-grad); color: #fff; font-size: 12px; font-weight: 800; padding: 5px 14px; border-radius: 99px; }
+.htier h3 { font-size: 21px; } .htier .amt { font-family: var(--display); font-size: 42px; font-weight: 900; margin: 12px 0 2px; } .htier .amt small { font-size: 15px; color: var(--text-dim); font-weight: 500; }
+.htier ul { list-style: none; margin: 18px 0 24px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+.htier li { display: flex; gap: 10px; color: var(--text-dim); font-size: 14.5px; } .htier li svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+.trust { display: flex; gap: 26px; justify-content: center; flex-wrap: wrap; color: var(--text-faint); font-size: 14px; margin-top: 30px; }
+.trust span { display: inline-flex; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<header id="rm-nav"></header>
+
+<section class="dh-hero container">
+  <div class="eyebrow" style="margin-bottom:14px"><span class="dot"></span> Domæner &amp; hosting</div>
+  <h1>Få dit eget domæne &amp; hosting</h1>
+  <p>Alt samlet ét sted. Find dit perfekte domæne, og lad Reachmore stå for hosting, SSL og det hele — så du bare kan koncentrere dig om din virksomhed.</p>
+  <div class="search">
+    <input id="q" placeholder="Søg efter dit domæne, fx mitfirma" autocomplete="off">
+    <button class="btn btn-primary btn-lg" id="go">Søg</button>
+  </div>
+  <div class="results" id="res"></div>
+  <div class="trust">
+    <span>🔒 Gratis SSL inkluderet</span><span>⚡ Lynhurtig hosting</span><span>🇩🇰 Dansk support</span><span>🛡️ 99,9% oppetid</span>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Reachmore Hosting</h2>
+  <p class="sub">Hurtig, sikker hosting til dit website — drevet af Reachmore.</p>
+  <div class="host">
+    <div class="htier">
+      <h3>Start</h3><div class="amt">29 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> 1 website</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> 10 GB lagerplads</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Gratis SSL</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> E-mail support</li>
+      </ul>
+      <button class="btn btn-ghost btn-block" data-host="Start">Vælg Start</button>
+    </div>
+    <div class="htier hi">
+      <div class="tag">Mest populær</div>
+      <h3>Vækst</h3><div class="amt">59 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> 5 websites</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> 50 GB lagerplads</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Daglig backup</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Prioritet support</li>
+      </ul>
+      <button class="btn btn-primary btn-block" data-host="Vækst">Vælg Vækst</button>
+    </div>
+    <div class="htier">
+      <h3>Pro</h3><div class="amt">119 <small>kr/md</small></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Ubegrænsede websites</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> 200 GB lagerplads</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Daglig backup + CDN</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Dedikeret rådgiver</li>
+      </ul>
+      <button class="btn btn-ghost btn-block" data-host="Pro">Vælg Pro</button>
+    </div>
+  </div>
+</section>
+
+<footer id="rm-footer"></footer>
+<script src="assets/js/store.js?v=11"></script>
+<script src="assets/js/tokens.js?v=11"></script>
+<script src="assets/js/auth.js?v=11"></script>
+<script src="assets/js/page.js?v=11"></script>
+<script src="assets/js/bot.js?v=11"></script>
+<script>
+(function () {
+  const $ = s => document.querySelector(s);
+  const TLDS = [['.dk', 49], ['.com', 99], ['.dk-business', 79], ['.io', 399], ['.shop', 129], ['.online', 89]];
+  const slug = s => (s || '').toLowerCase().replace(/[æ]/g,'ae').replace(/[ø]/g,'oe').replace(/[å]/g,'aa').replace(/[^a-z0-9-]/g,'').slice(0,40);
+  function avail(name, tld) { let h = 0; const s = name + tld; for (let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return (h % 10) > 2; } // ~70% available, deterministic
+  function search() {
+    const raw = slug($('#q').value); if (!raw) { $('#q').focus(); return; }
+    $('#res').innerHTML = TLDS.map(([tld, price]) => {
+      const ext = tld === '.dk-business' ? '.dk' : tld;
+      const ok = avail(raw, tld);
+      return `<div class="dom"><span class="nm">${raw}${ext}</span>
+        <span class="av ${ok?'ok':'no'}">${ok?'Ledig':'Optaget'}</span>
+        <span class="pr">${price} kr<small>/år</small></span>
+        ${ok?`<button class="btn btn-primary btn-sm" data-dom="${raw}${ext}" data-price="${price}">Tilføj</button>`:'<button class="btn btn-ghost btn-sm" disabled>—</button>'}</div>`;
+    }).join('');
+    $('#res').querySelectorAll('[data-dom]').forEach(b => b.onclick = () => order('domæne', b.dataset.dom, b.dataset.price + ' kr/år'));
+  }
+  function order(type, item, price) {
+    const RM = window.RM;
+    if (!RM || !RM.isLoggedIn()) { if (window.RMAuth) RMAuth.open('signup', () => order(type, item, price)); return; }
+    // For real purchases this calls the backend (GoDaddy reseller API + Stripe). Here we register the intent.
+    if (type === 'domæne' && RM.addCustomDomain) { try { RM.addCustomDomain(RM.currentUser().id, item.replace(/^[^.]*/, m=>m)); } catch(e){} }
+    alert('✅ ' + (type==='domæne'?'Domæne':'Hosting') + ' "' + item + '" (' + price + ') er tilføjet til din konto. Du betaler sikkert via Stripe sammen med dit abonnement.');
+  }
+  $('#go').onclick = search;
+  $('#q').addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
+  document.querySelectorAll('[data-host]').forEach(b => b.onclick = () => order('hosting', 'Reachmore Hosting ' + b.dataset.host, ({Start:'29',Vækst:'59',Pro:'119'}[b.dataset.host]) + ' kr/md'));
+  // deep-link ?q=
+  const q = new URLSearchParams(location.search).get('q'); if (q) { $('#q').value = q; search(); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Reachmore</title>
+<link rel="icon" href="assets/img/reachmore-logo.png">
+<link rel="stylesheet" href="assets/css/reachmore.css?v=11">
+<style>
+.posts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+@media(max-width:640px){ .posts { grid-template-columns: 1fr; } }
+.post { background: var(--bg-1); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: transform .2s, border-color .2s; cursor: pointer; }
+.post:hover { transform: translateY(-4px); border-color: var(--accent); }
+.post .thumb { height: 150px; }
+.post .body { padding: 18px 20px; }
+.post .tag { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+.post h3 { font-size: 19px; margin: 8px 0; }
+.post p { color: var(--text-dim); font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<header id="rm-nav"></header>
+<main class="rm-page">
+  <div class="eyebrow"><span class="dot"></span> Blog</div>
+  <h1>Idéer, guides & inspiration</h1>
+  <p class="lead">Tips til at bygge bedre websites, vækste din virksomhed online og få mest muligt ud af Reachmore.</p>
+  <div class="posts">
+    <a class="post" href="blog-ai-prompts.html"><div class="thumb" style="background:linear-gradient(135deg,#f97316,#d8519e)"></div><div class="body"><span class="tag">Guide</span><h3>Sådan skriver du en god AI-prompt til din hjemmeside</h3><p>De bedste beskrivelser giver de bedste sider. Her er vores tips.</p></div></a>
+    <a class="post" href="blog-sektioner.html"><div class="thumb" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)"></div><div class="body"><span class="tag">Vækst</span><h3>5 sektioner enhver virksomhedsside bør have</h3><p>Fra hero til kontakt — det skal en konverterende side indeholde.</p></div></a>
+    <a class="post" href="blog-farver.html"><div class="thumb" style="background:linear-gradient(135deg,#10b981,#3b82f6)"></div><div class="body"><span class="tag">Design</span><h3>Vælg de rigtige farver til dit brand</h3><p>Farver påvirker tillid og køb. Sådan rammer du rigtigt.</p></div></a>
+    <a class="post" href="blog-roadmap.html"><div class="thumb" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"></div><div class="body"><span class="tag">Nyt</span><h3>Reachmore i 2026: hvad vi har på vej</h3><p>Et kig ind i roadmappen — betaling, domæner og meget mere.</p></div></a>
+  </div>
+  <div class="info-card" style="margin-top:32px"><p>📬 Vil du have nye artikler i din indbakke? Skriv til <a href="mailto:support@reachmore.dk">support@reachmore.dk</a>, så sætter vi dig på listen.</p></div>
+</main>
+<footer id="rm-footer"></footer>
+<script src="assets/js/store.js?v=11"></script>
+<script src="assets/js/tokens.js?v=11"></script>
+<script src="assets/js/auth.js?v=11"></script>
+<script src="assets/js/page.js?v=11"></script>
+<script src="assets/js/bot.js?v=11"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`applyTranslation from content to match snapshot 1`] = `
+Object {
+  "data": Object {
+    "blocks": Array [
+      Object {
+        "@type": "@builder.io/sdk:Element",
+        "component": Object {
+          "name": "Text",
+          "options": Object {
+            "text": Object {
+              "@type": "@builder.io/core:LocalizedValue",
+              "Default": "test",
+              "de": "german translatated",
+              "fr-FR": "fench translated text",
+            },
+          },
+        },
+        "id": "block-id",
+        "meta": Object {
+          "transformed.text": "localized",
+          "translated": true,
+        },
+      },
+      Object {
+        "@type": "@builder.io/sdk:Element",
+        "component": Object {
+          "name": "Heading",
+          "options": Object {
+            "heading": Object {
+              "@type": "@builder.io/core:LocalizedValue",
+              "Default": "I am a heading!",
+              "de": "\\"german heading\\"",
+              "en-US": "en-us headings!",
+              "fr-FR": "french translated heading",
+            },
+            "subtitle": Object {
+              "@type": "@builder.io/core:LocalizedValue",
+              "Default": "I am a subtitle!",
+              "de": "german translated subtitle",
+              "en-US": "en-us subtitle!",
+              "fr-FR": "french translated subtitle",
+            },
+          },
+        },
+        "id": "builder-custom-component-id",
+        "meta": Object {
+          "localizedTextInputs": Array [
+            "heading",
+            "subtitle",
+          ],
+          "translated": true,
+        },
+      },
+      Object {
+        "@type": "@builder.io/sdk:Element",
+        "@version": 2,
+        "component": Object {
+          "name": "Symbol",
+          "options": Object {
+            "symbol": Object {
+              "data": Object {
+                "heroContent": Object {
+                  "cta": Object {
+                    "label": Object {
+                      "@type": "@builder.io/core:LocalizedValue",
+                      "Default": "content label",
+                      "de": "german label",
+                      "en-GB": "label for GB",
+                      "en-US": "label for US",
+                      "fr-FR": "french label",
+                      "hi-IN": "label for India",
+                    },
+                    "link": "content link",
+                    "otherLabels": Array [
+                      Object {
+                        "kids": Object {
+                          "@type": "@builder.io/core:LocalizedValue",
+                          "Default": "content label kids",
+                          "de": "german label for kids",
+                          "en-GB": "label for GB kids",
+                          "en-US": "label for US kids",
+                          "fr-FR": "french label for kids",
+                        },
+                        "men": Object {
+                          "@type": "@builder.io/core:LocalizedValue",
+                          "Default": "content label men",
+                          "de": "german label for men",
+                          "en-GB": "label for GB men",
+                          "en-US": "label for US men",
+                          "fr-FR": "french label for men",
+                        },
+                      },
+                      Object {
+                        "women": Object {
+                          "@type": "@builder.io/core:LocalizedValue",
+                          "Default": "content label women",
+                          "de": "german label for women",
+                          "en-GB": "label for GB women",
+                          "en-US": "label for US women",
+                          "fr-FR": "french label for women",
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              "entry": "6a013dc290a548eb8e968c848ae5d5a2",
+              "model": "symbol",
+              "ownerId": "cfadfce0f3684576b7a6cca6599ce3be",
+            },
+          },
+        },
+        "id": "builder-068283319b1740b3aa8279c09c1dc957",
+        "meta": Object {
+          "transformed.symbol.data.heroContent.cta.label": "localized",
+          "transformed.symbol.data.heroContent.cta.otherLabels[0].kids": "localized",
+          "transformed.symbol.data.heroContent.cta.otherLabels[0].men": "localized",
+          "transformed.symbol.data.heroContent.cta.otherLabels[1].women": "localized",
+          "translated": true,
+        },
+      },
+      Object {
+        "@type": "@builder.io/sdk:Element",
+        "@version": 2,
+        "component": Object {
+          "name": "Symbol",
+          "options": Object {
+            "symbol": Object {
+              "data": Object {
+                "children": Array [
+                  Object {
+                    "@type": "@builder.io/sdk:Element",
+                    "@version": 2,
+                    "children": Array [
+                      Object {
+                        "@type": "@builder.io/sdk:Element",
+                        "@version": 2,
+                        "component": Object {
+                          "name": "Typography",
+                          "options": Object {
+                            "children": Object {
+                              "@type": "@builder.io/core:LocalizedValue",
+                              "Default": "2. Properly configuring your gamepad",
+                              "de": "2. german Properly configuring your gamepad",
+                              "fr": "Gardez vos fichiers privés et en sécurité grâce à Shadow Drive, notre solution de stockage dans le cloud conçue et hébergée en Europe.<br><strong> C'est désormais le drive sécurisé le moins cher du marché.",
+                              "fr-FR": "2. french Properly configuring your gamepad",
+                            },
+                            "color": "black",
+                            "component": "p",
+                            "htmlTag": "h2",
+                            "variant": "heading-h4",
+                            "variantMobile": "heading-h5",
+                            "variantTablet": "body-md",
+                          },
+                        },
+                        "id": "builder-5f0b30f48b5a47a7ababc6526b65a17e",
+                        "layerName": "Intertitre",
+                        "meta": Object {
+                          "localizedTextInputs": Array [
+                            "children",
+                          ],
+                          "previousId": "builder-5f7863a185524c40ba854534de6c5d7f",
+                          "transformed.children": "localized",
+                          "translated": true,
+                        },
+                        "responsiveStyles": Object {
+                          "large": Object {
+                            "display": "inline",
+                          },
+                        },
+                      },
+                      Object {
+                        "@type": "@builder.io/sdk:Element",
+                        "@version": 2,
+                        "component": Object {
+                          "name": "Typography",
+                          "options": Object {
+                            "children": Object {
+                              "@type": "@builder.io/core:LocalizedValue",
+                              "Default": "3. Optimizing connectivity",
+                              "de": "3. german Optimizing connectivity",
+                              "fr": "Gardez vos fichiers privés et en sécurité grâce à Shadow Drive, notre solution de stockage dans le cloud conçue et hébergée en Europe.<br><strong> C'est désormais le drive sécurisé le moins cher du marché.",
+                              "fr-FR": "3. french Optimizing connectivity",
+                            },
+                            "color": "black",
+                            "component": "p",
+                            "variant": "heading-h4",
+                            "variantMobile": "heading-h5",
+                            "variantTablet": "body-md",
+                          },
+                        },
+                        "id": "builder-5ce42f734ffa429b8c5612cb2e340bd7",
+                        "layerName": "Intertitre",
+                        "meta": Object {
+                          "localizedTextInputs": Array [
+                            "children",
+                          ],
+                          "previousId": "builder-5f0b30f48b5a47a7ababc6526b65a17e",
+                          "transformed.children": "localized",
+                          "translated": true,
+                        },
+                      },
+                    ],
+                    "id": "builder-1fae3855fc1c441683f52c18d46e2601",
+                  },
+                ],
+              },
+              "entry": "6a013dc290a548eb8e968c848ae5d5a2",
+              "model": "symbol",
+              "ownerId": "cfadfce0f3684576b7a6cca6599ce3be",
+            },
+          },
+        },
+        "id": "builder-5128283319b1740b3aa8279c09c1dc957",
+        "meta": Object {
+          "translated": true,
+        },
+      },
+      Object {
+        "@type": "@builder.io/sdk:Element",
+        "@version": 2,
+        "component": Object {
+          "name": "myFunComponent",
+          "options": Object {
+            "listItems": Array [
+              Object {
+                "field1": Object {
+                  "@type": "@builder.io/core:LocalizedValue",
+                  "Default": "<p>text 1 value</p>",
+                  "de": "<p>german - text 1 value</p>",
+                  "fr-FR": "<p>french - text 1 value</p>",
+                },
+                "field2": "field 2 value",
+              },
+              Object {
+                "field1": Object {
+                  "@type": "@builder.io/core:LocalizedValue",
+                  "Default": "<p>text 1.1 value</p>",
+                  "de": "<p>german - text 1.1 value</p>",
+                  "fr-FR": "<p>french - text 1.1 value</p>",
+                },
+                "field2": "field 2.1 value",
+              },
+            ],
+            "text": "Hello, Builder!",
+            "title": Object {
+              "text": Object {
+                "@type": "@builder.io/core:LocalizedValue",
+                "Default": "<p>custom component subField input</p>",
+                "de": "<p>german - custom component subField input</p>",
+                "fr-FR": "<p>french - custom component subField input</p>",
+              },
+            },
+          },
+        },
+        "id": "builder-23e0618256ab40799ecf6504bc57fa1c",
+        "meta": Object {
+          "localizedTextInputs": Array [
+            "title.text",
+            "listItems.0.field1",
+            "listItems.1.field1",
+          ],
+          "transformed.title.text": "localized",
+          "translated": true,
+        },
+        "responsiveStyles": Object {
+          "large": Object {
+            "boxSizing": "border-box",
+            "display": "flex",
+            "flexDirection": "column",
+            "flexShrink": "0",
+            "marginTop": "20px",
+            "position": "relative",
+          },
+        },
+      },
+    ],
+    "seo": Object {
+      "@type": "@builder.io/core:LocalizedValue",
+      "Default": Object {
+        "name": "default name in subfield",
+      },
+      "de": Object {
+        "name": "german name in subfield",
+      },
+      "en-US": Object {
+        "menuItems": Array [
+          Object {
+            "menuName": "en menu name",
+          },
+        ],
+        "name": "en name in subfield",
+      },
+      "fr-FR": Object {
+        "name": "french name in subfield",
+      },
+    },
+    "title": Object {
+      "@type": "@builder.io/core:LocalizedValue",
+      "Default": "Test",
+      "de": "hallo",
+      "en-US": "Hello",
+      "fr-FR": "salut",
+    },
+  },
+}
+`;
+
+exports[`applyTranslation from plain data model content to match snapshot 1`] = `
+Object {
+  "data": Object {
+    "title": Object {
+      "@type": "@builder.io/core:LocalizedValue",
+      "Default": "Test",
+      "de": "hallo",
+      "en-US": "Hello",
+      "fr-FR": "salut",
+    },
+  },
+}
+`;
+
+exports[`getTranslateableFields from carousel content and custom component with subFields to match snapshot 1`] = `
+Object {
+  "blocks.builder-06d3f6da74fb4054ad311afc1dda3675#text": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "<p>I am slide second</p>",
+  },
+  "blocks.builder-0a10ae48b6314221bbb7d06d068d623d#text": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "<p>I am slide 1</p>",
+  },
+  "blocks.builder-23e0618256ab40799ecf6504bc57fa1c#listItems.0.field1": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "<p>text 1 value</p>",
+  },
+  "blocks.builder-23e0618256ab40799ecf6504bc57fa1c#listItems.1.field1": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "<p>text 1.1 value</p>",
+  },
+  "blocks.builder-23e0618256ab40799ecf6504bc57fa1c#title.text": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "<p>custom component subField input</p>",
+  },
+}
+`;
+
+exports[`getTranslateableFields from content to match snapshot 1`] = `
+Object {
+  "blocks.block-id#text": Object {
+    "instructions": "This is a mobile only element",
+    "value": "test",
+  },
+  "blocks.block-pre-localized-element#text": Object {
+    "instructions": "This is a mobile only element",
+    "value": "en-us text!",
+  },
+  "blocks.builder-068283319b1740b3aa8279c09c1dc957.symbolInput#heroContent.cta.label": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "label for US",
+  },
+  "blocks.builder-068283319b1740b3aa8279c09c1dc957.symbolInput#heroContent.cta.otherLabels[0].kids": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "label for US kids",
+  },
+  "blocks.builder-068283319b1740b3aa8279c09c1dc957.symbolInput#heroContent.cta.otherLabels[0].men": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "label for US men",
+  },
+  "blocks.builder-068283319b1740b3aa8279c09c1dc957.symbolInput#heroContent.cta.otherLabels[1].women": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "label for US women",
+  },
+  "blocks.builder-5ce42f734ffa429b8c5612cb2e340bd7#children": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "3. Optimizing connectivity",
+  },
+  "blocks.builder-5f0b30f48b5a47a7ababc6526b65a17e#children": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "2. Properly configuring your gamepad",
+  },
+  "blocks.builder-custom-component-id#heading": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "en-us headings!",
+  },
+  "blocks.button-localized-text-id#text": Object {
+    "instructions": "Button with pre-localized text",
+    "value": "Click Me!",
+  },
+  "blocks.button-plain-text-id#text": Object {
+    "instructions": "Button with plain text",
+    "value": "Cute Baby",
+  },
+  "metadata.seo#menuItems#0#menuName": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "en menu name",
+  },
+  "metadata.seo#name": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "en name in subfield",
+  },
+  "metadata.title": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "Hello",
+  },
+}
+`;
+
+exports[`getTranslateableFields from plain data model content to match snapshot 1`] = `
+Object {
+  "metadata.title": Object {
+    "instructions": "Visit https://builder.io/fiddle/... for more details",
+    "value": "Hello",
+  },
+}
+`;

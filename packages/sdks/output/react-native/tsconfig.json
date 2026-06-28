@@ -1,0 +1,26 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2016",
+    "allowJs": true,
+    "noEmitOnError": false,
+    "noEmit": false,
+    "lib": ["ESNext", "dom"],
+    // Override: exclude jest types.
+    "types": ["react-native", "node"],
+    "noImplicitAny": false,
+    "strict": false,
+    "strictNullChecks": false,
+    // "isolatedModules": false,
+    // we don't use react-native, as that preserves the JSX tags
+    "jsx": "react",
+    "paths": {
+      "placeholder-runtime": [
+        "./src/functions/evaluate/browser-runtime/index.js"
+      ]
+    },
+    "outDir": "./dist"
+  },
+  // "include": ["typings/*.d.ts", "src/**/*"],
+  "files": ["typings/module.augmentations.d.ts", "src/index.ts"]
+}

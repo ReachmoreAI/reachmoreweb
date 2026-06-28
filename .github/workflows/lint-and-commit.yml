@@ -1,0 +1,61 @@
+---
+name: Auto lint & commit 🤖
+
+on:
+  push:
+    branches:
+      - main
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+permissions:
+  contents: write
+
+jobs:
+  auto-lint-and-commit:
+    name: Auto lint & commit 🤖
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BUILDER_BOT_FOR_LINT_APP_ID }}
+          private-key: ${{ secrets.BUILDER_BOT_FOR_LINT_PRIVATE_KEY }}
+
+      - name: Setup
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          token: ${{ steps.generate-token.outputs.token }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Run prettier
+        run: yarn workspace @builder.io/root lint:fix
+
+      - name: Run eslint
+        run: yarn workspace @builder.io/sdks lint
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        id: auto-commit-action
+        with:
+          commit_message: Apply linting changes
+
+      - name: 'Run if changes have been detected'
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: echo "Committed linting changes."
+
+      - name: 'Run if no changes have been detected'
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: echo "No linting changes to commit."

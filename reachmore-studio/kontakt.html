@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="da" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontakt — Reachmore</title>
+<link rel="icon" href="assets/img/reachmore-logo.png">
+<link rel="stylesheet" href="assets/css/reachmore.css?v=11">
+</head>
+<body>
+<div class="bg-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<header id="rm-nav"></header>
+<main class="rm-page">
+  <div class="eyebrow"><span class="dot"></span> Kontakt</div>
+  <h1>Vi vil gerne høre fra dig</h1>
+  <p class="lead">Spørgsmål, idéer eller brug for hjælp? Skriv til os — vi vender tilbage inden for 24 timer.</p>
+
+  <div class="grid2">
+    <div class="tile2">
+      <h3>📧 E-mail</h3>
+      <p><a href="mailto:support@reachmore.dk">support@reachmore.dk</a></p>
+      <h3>💬 Support</h3>
+      <p>Brug AI-assistenten nederst i hjørnet, eller se <a href="hjaelp.html">hjælpecenteret</a>.</p>
+      <h3>🏢 Adresse</h3>
+      <p>Lindeholm Ltd (HE 482155)<br>Ακαμαντίδος 26, 8016 Paphos, Cypern</p>
+    </div>
+    <div class="tile2">
+      <h3>Send en besked</h3>
+      <form class="rm-contact-form" id="cform">
+        <input id="cname" placeholder="Dit navn" required>
+        <input id="cmail" type="email" placeholder="Din e-mail" required>
+        <textarea id="cmsg" placeholder="Din besked" required></textarea>
+        <button class="btn btn-primary" type="submit" style="justify-content:center">Send besked</button>
+        <p id="cok" style="display:none;color:#34d399;font-weight:600">Tak! Vi har modtaget din besked og vender tilbage hurtigst muligt. 💜</p>
+      </form>
+    </div>
+  </div>
+</main>
+<footer id="rm-footer"></footer>
+<script src="assets/js/store.js?v=11"></script>
+<script src="assets/js/tokens.js?v=11"></script>
+<script src="assets/js/auth.js?v=11"></script>
+<script src="assets/js/page.js?v=11"></script>
+<script src="assets/js/bot.js?v=11"></script>
+<script>
+document.getElementById('cform').addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (!document.getElementById('cname').value.trim() || !document.getElementById('cmail').value.trim() || !document.getElementById('cmsg').value.trim()) return;
+  this.querySelectorAll('input,textarea,button').forEach(el => el.style.display = 'none');
+  document.getElementById('cok').style.display = 'block';
+});
+</script>
+</body>
+</html>
